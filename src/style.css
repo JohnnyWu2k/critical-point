@@ -1,0 +1,125 @@
+:root {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #0a0a0a;
+  color: white;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 15px;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* 頂部資訊列 */
+#info-bar {
+  display: flex;
+  gap: 12px;
+  width: 90vw;
+  max-width: 450px;
+}
+
+.status-item {
+  flex: 1;
+  padding: 12px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid #333;
+  transition: all 0.4s;
+}
+
+.dot-inline {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+/* 呼吸燈動畫 */
+@keyframes pulse-red { 0%, 100% { box-shadow: 0 0 5px #ff4d4d; border-color: #ff4d4d66; } 50% { box-shadow: 0 0 15px #ff4d4d; border-color: #ff4d4d; } }
+@keyframes pulse-green { 0%, 100% { box-shadow: 0 0 5px #4dff88; border-color: #4dff8866; } 50% { box-shadow: 0 0 15px #4dff88; border-color: #4dff88; } }
+
+.turn-red { animation: pulse-red 2s infinite; color: #ff4d4d; }
+.turn-green { animation: pulse-green 2s infinite; color: #4dff88; }
+.winner-glow { background: #fcc419; color: black; border-color: #fcc419; box-shadow: 0 0 25px #fcc419; }
+
+/* 棋盤 */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 90vw;
+  max-width: 450px;
+  aspect-ratio: 1/1;
+  gap: 5px;
+  background: #151515;
+  padding: 8px;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border: 1px solid #333;
+}
+
+.cell {
+  background: #222;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cell:hover { background: #2a2a2a; }
+
+/* 抖動動畫 */
+@keyframes shake { 0%, 100% { transform: translate(0,0); } 25% { transform: translate(1px,1px); } 50% { transform: translate(-1px,1px); } 75% { transform: translate(1px,-1px); } }
+.critical { animation: shake 0.15s infinite; background: #2d2d2d; }
+
+.orb-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  width: 75%;
+  height: 75%;
+}
+
+.dot {
+  width: 25%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.dot.red, .dot-inline.red { background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a); }
+.dot.green, .dot-inline.green { background: radial-gradient(circle at 30% 30%, #69db7c, #2b8a3e); }
+
+/* 重製按鈕樣式 */
+#reset-btn {
+  margin-top: 5px;
+  padding: 10px 20px;
+  background: #1a1a1a;
+  color: #666;
+  border: 1px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+#reset-btn:hover:not(:disabled) { color: white; background: #252525; border-color: #555; }
+#reset-btn.ready { color: #555; border-color: #222; cursor: default; }
+
+@keyframes pulse-yellow { 0%, 100% { box-shadow: 0 0 2px #fcc419; } 50% { box-shadow: 0 0 12px #fcc419; } }
+#reset-btn.opponent-waiting {
+  animation: pulse-yellow 1.5s infinite;
+  border-color: #fcc419;
+  color: #fcc419;
+}
